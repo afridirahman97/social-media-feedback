@@ -1,0 +1,26 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  .bottom-nav {
+    width: 100%;
+    height: 9%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    border-top: 0px solid rgb(230, 230, 230);
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 25px 25px 0px 0px;
+    background-color: #1B164E;
+  }
+  .bn-tab {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

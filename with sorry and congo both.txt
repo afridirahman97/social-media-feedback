@@ -1,0 +1,1112 @@
+// import React, { useEffect } from 'react';
+import BackgroundYellow from "../../images/yellow_bg.png";
+import QuestionBackground from "../../images/design.png";
+import Question_bg from "../../images/base_background.png";
+import Footer from "../../images/footer_bg.png";
+//import { Link } from 'react-router-dom';
+//import { Radio } from 'antd';
+// import { useState } from "react";
+// import { useContext } from "react";
+//import { GameStateContext } from "../helpers/Context";
+//import moment from "moment";
+//import Axios from "axios";
+import "./Question.css";
+import Frame from "../../images/Frame.png";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+//import axios from "axios";
+//import { connect } from "react-redux";
+//import { Auth } from "aws-amplify";
+import { FacebookShareButton } from 'react-share';
+//import SurveyQuestion from "./SurveyQuestion";
+
+
+//for complete
+
+import trophy from '../../images/Good_Job.png';
+import Share from '../../images/share.png';
+import Sorry from '../../images/sad.png'
+//import { render } from "react-dom";
+
+
+
+
+class GetQuestionList extends Component {
+
+  state = {
+    loading: true,
+  }
+
+  componentDidMount() {
+    // this simulates an async action, after which the component will render the content
+    demoAsyncCall().then(() => this.setState({ loading: false }));
+  }
+
+
+
+
+  render() {
+
+    const { loading } = this.state;
+
+    var point_earned = this.props.point;
+    var obj = this.props.obj;
+    var currentQuestion = this.props.currentQuestion;
+    //console.log(currentQuestion);
+    var Questions = obj;
+    var selected = this.props.selectedValue;
+    console.log(selected)
+
+    if (loading) { // if your component doesn't have to wait for async data, remove this block 
+      return (
+        <div style={{
+          textAlign: "center",
+          fontWeight: "bold",
+          color: "#124589",
+          fontFamily: "poppins",
+          width: "180px",
+          fontSize: "20px",
+          position: 'absolute', left: '50%', top: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}>
+          <p>Loading Questions..</p>
+        </div>
+      ); // render null when app is not ready
+    }
+
+
+
+
+
+    if (obj.length > 0) {
+      var option1 = (obj[currentQuestion].option_list);
+      // var store3 = option1.split("\"");
+      // var store2 = store3.filter(Boolean);
+      var question_id = obj[currentQuestion]["id"]
+      // console.log(JSON.parse(option1))
+
+      var store1 = (JSON.parse(option1))
+
+
+      if (obj[currentQuestion].secondary_type == "Radio") {
+        // console.log(obj)
+        var Q_number = currentQuestion;
+        return (
+          <div>
+            <div
+              style={{
+                backgroundColor: "#F6F7FA",
+                height: "100vh",
+                backgroundSize: "cover",
+              }}
+            >
+              <div
+                className="QuestionContainer"
+                style={{
+                  backgroundImage: `url(${Question_bg})`,
+                  backgroundColor: "white",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  width: "100%",
+                  height: "170px",
+                  borderRadius: "0px 0px 32px 32px",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  flexDirection: "row",
+                  padding: "50px",
+                  marginBottom: "10%",
+                }}
+              >
+                <div style={{ marginBottom: "10px" }}>
+                  <h3
+                    style={{
+                      fontFamily: "poppins",
+                      fontSize: "16px",
+                      textAlign: "center",
+                      fontWeight: "700",
+                      backgroundColor: "#FCD034",
+                      width: "24px",
+                      height: "24px",
+                      borderRadius: "50%",
+                      padding: "3px",
+                    }}
+                  >
+                    {Q_number + 1}
+                  </h3>
+                </div>
+                <p
+                  style={{
+                    fontFamily: "poppins",
+                    fontWeight: "600",
+                    fontSize: "16px",
+                    color: "white",
+                    paddingLeft: "15px",
+                  }}
+                >
+                  {obj[currentQuestion].question}
+                </p>
+              </div>
+
+              <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                paddingRight: '10px',
+                paddingLeft: '10px',
+                marginBottom: '20px'
+              }}>
+                {
+                  obj.map((id, index) => {
+                    const active = {
+                      fontFamily: "poppins",
+                      fontSize: "16px",
+                      textAlign: "center",
+                      fontWeight: "700",
+                      backgroundColor: "#FF565E",
+                      width: "26px",
+                      height: "28px",
+                      borderRadius: "50%",
+                      padding: "3px",
+                      color: '#FCD034'
+                    }
+                    const deactive = {
+                      fontFamily: "poppins",
+                      fontSize: "16px",
+                      textAlign: "center",
+                      fontWeight: "500",
+                      backgroundColor: "#FCD034",
+                      width: "26px",
+                      height: "28px",
+                      borderRadius: "50%",
+                      padding: "3px",
+
+                    }
+                    return (
+
+                      <div>
+                        <p>{(index) === Q_number ? <div style={active}>{index + 1}</div> : <div style={deactive}>{index + 1}</div>}</p>
+                      </div>
+
+                    )
+
+                  })
+
+
+                }
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <div
+                  className="options"
+                  style={{
+                    backgroundColor: "white",
+                    height: "auto",
+                    width: "345px",
+                    alignItems: "center",
+                    borderRadius: "12px",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "left",
+                        //marginTop: '50px',
+                        paddingLeft: "15px",
+                        paddingRight: "15px",
+                        paddingTop: "25px",
+                        paddingBottom: "25px",
+
+                      }}
+                    >
+                      <form onSubmit={(e) => this.props.submit}>
+                        {
+                          Object.entries(store1).map(([key, value]) => {
+                            return (
+                              <div>
+                                <label class="radio_container">
+                                  <input
+                                    type="radio"
+                                    name="radio"
+                                    onClick={this.props.handle}
+                                    value={value}
+                                    id={"selected_answer" + question_id}
+                                    question_id={question_id}
+                                    checked={this.props.selected_answer_list[question_id] === value ? true : false}
+
+                                  />
+                                  <span class="checkmark">{value}</span>
+                                </label>
+                              </div>
+                            )
+
+                          })
+                        }
+                      </form>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div
+                style={{
+                  alignItems: "center",
+                  position: "absolute",
+                  bottom: 0,
+                  width: "100%",
+                  height: "70px",
+                  borderTopLeftRadius: "32px",
+                  borderTopRightRadius: "32px",
+                  justifyContent: "center",
+                  paddingLeft: "70px",
+                  paddingRight: "70px",
+                  backgroundImage: `url(${Footer})`,
+                  //backgroundPosition: 'center',
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <div className="submitSection">
+                  {currentQuestion == Questions.length - 1 ? (
+                    <button
+                      style={{
+                        textAlign: "center",
+                        backgroundColor: "#FFFFFF",
+                        padding: "11px",
+                        borderRadius: "10px",
+                        fontWeight: "bold",
+                        boxShadow: `1px 1px 1px black`,
+                        color: "#124589",
+                        fontFamily: "poppins",
+                        width: "180px",
+                        marginTop: "10px",
+                      }}
+                      onClick={this.props.submit}
+                      id="nextQuestion"
+                    >
+                      Finish Survey
+                    </button>
+                  ) : this.props.selected_answer_list[question_id]  ? (
+
+                    <button
+                      style={{
+                        textAlign: "center",
+                        backgroundColor: "#FFFFFF",
+                        padding: "11px",
+                        borderRadius: "10px",
+                        fontWeight: "bold",
+                        boxShadow: `1px 1px 1px black`,
+                        color: "#124589",
+                        fontFamily: "poppins",
+                        width: "180px",
+                        marginTop: "10px",
+                      }}
+                      onClick={this.props.nextQuestion}
+                      id="nextQuestion"
+                    >
+                      Next
+                    </button>
+                  ) : (
+                    <button
+                      style={{
+                        textAlign: "center",
+                        backgroundColor: "#FFFFFF",
+                        padding: "11px",
+                        borderRadius: "10px",
+                        fontWeight: "bold",
+                        boxShadow: `1px 1px 1px black`,
+                        color: "#99A3A4",
+                        fontFamily: "poppins",
+                        width: "180px",
+                        marginTop: "10px",
+                      }}
+                      
+                    >
+                      Select Answer First
+                    </button>
+
+                  )
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      } else if (obj[currentQuestion].secondary_type == "textInput") {
+        return (
+          <div
+            style={{
+              backgroundImage: `url(${BackgroundYellow})`,
+              height: "100vh",
+              backgroundSize: "cover",
+            }}
+          >
+            <div
+              className="QuestionContainer"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontFamily: "KongshoMJ_Bold",
+                color: "#005190",
+                fontSize: "30px",
+                paddingTop: "140px",
+              }}
+            >
+              {Questions[currentQuestion].prompt}
+            </div>
+            <div
+              style={{
+                alignItems: "center",
+                backgroundColor: "#453179",
+                position: "absolute",
+                bottom: 0,
+                width: "100%",
+                height: "50%",
+                borderTopLeftRadius: "45px",
+                borderTopRightRadius: "45px",
+                justifyContent: "center",
+                paddingLeft: "70px",
+                paddingRight: "70px",
+                backgroundImage: `url(${QuestionBackground})`,
+                //backgroundPosition: 'center',
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              <div className="textInput">
+                <form onSubmit={(e) => this.props.submit}>
+                  <input
+                    onChange={(e) => this.props.handle}
+                    id="selected_answer"
+                    placeholder="DËi wjLyb..."
+                    type="text"
+                  ></input>
+                </form>
+              </div>
+
+              <div className="submitSection">
+                {currentQuestion == Questions.length - 1 ? (
+                  <button
+                    style={{
+                      textAlign: "center",
+                      backgroundColor: "#FFFD00",
+                      padding: "11px",
+                      borderRadius: "10px",
+                      fontWeight: "bold",
+                      boxShadow: `1px 1px 1px black`,
+                      color: "#124589",
+                    }}
+                    onClick={this.props.submit}
+                    id="nextQuestion"
+                  >
+                    Finish Survey
+                  </button>
+                ) : (
+                  <button
+                    style={{
+                      textAlign: "center",
+                      backgroundColor: "#FFFD00",
+                      padding: "11px",
+                      borderRadius: "10px",
+                      fontWeight: "bold",
+                      boxShadow: `1px 1px 1px black`,
+                      color: "#124589",
+                    }}
+                    onClick={this.props.nextQuestion}
+                    id="nextQuestion"
+                  >
+                    Next Question
+                  </button>
+                )}
+              </div>
+              <div></div>
+            </div>
+          </div>
+        );
+      } else if (obj[currentQuestion].secondary_type == "DropDown") {
+        return (
+          <div>
+            <div
+              style={{
+                backgroundColor: "#F6F7FA",
+                height: "100vh",
+                backgroundSize: "cover",
+              }}
+            >
+              <div
+                className="QuestionContainer"
+                style={{
+                  backgroundImage: `url(${Question_bg})`,
+                  backgroundColor: "white",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  width: "100%",
+                  height: "170px",
+                  borderRadius: "0px 0px 32px 32px",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  flexDirection: "row",
+                  padding: "50px",
+                  marginBottom: "10%",
+                }}
+              >
+                <div style={{ marginBottom: "10px" }}>
+                  <h3
+                    style={{
+                      fontFamily: "poppins",
+                      fontSize: "16px",
+                      textAlign: "center",
+                      fontWeight: "700",
+                      backgroundColor: "#FCD034",
+                      width: "24px",
+                      height: "24px",
+                      borderRadius: "50%",
+                      padding: "3px",
+                    }}
+                  >
+                    {Questions[currentQuestion].id}
+                  </h3>
+                </div>
+                <p
+                  style={{
+                    fontFamily: "poppins",
+                    fontWeight: "600",
+                    fontSize: "16px",
+                    color: "white",
+                    paddingLeft: "15px",
+                  }}
+                >
+                  {Questions[currentQuestion].question}
+                </p>
+              </div>
+
+              <div
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  display: "flex",
+                  marginTop: "40px",
+                }}
+              >
+                <div
+                  className="options"
+                  style={{
+                    backgroundColor: "white",
+                    height: "340px",
+                    width: "345px",
+                    alignItems: "center",
+                    borderRadius: "12px",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <div className="container_dropdown">
+                      <div className="select-container">
+                        <form onSubmit={(e) => this.props.handle}>
+                          <div style={{ padding: "10px" }}>
+                            <select
+                              style={{
+                                fontFamily: "poppins",
+                                fontWeight: "700",
+                                fontSize: "14px",
+                                color: "#004277",
+                              }}
+                            >
+                              <option
+                                style={{
+                                  fontFamily: "poppins",
+                                  fontWeight: "700",
+                                  fontSize: "14px",
+                                  color: "#004277",
+                                }}
+                                onChange={(e) => this.props.handle}
+                                value={store1["option1"]}
+                                id="selected_answer"
+                              >
+                                {store1["option1"]}
+                              </option>
+                              <option
+                                style={{
+                                  fontFamily: "poppins",
+                                  fontWeight: "700",
+                                  fontSize: "14px",
+                                  color: "#004277",
+                                }}
+                                onChange={(e) => this.props.handle}
+                                value={store1["option2"]}
+                                id="selected_answer"
+                              >
+                                {store1["option2"]}
+                              </option>
+                              <option
+                                style={{
+                                  fontFamily: "poppins",
+                                  fontWeight: "700",
+                                  fontSize: "14px",
+                                  color: "#004277",
+                                }}
+                                onChange={(e) => this.props.handle}
+                                value={store1["option3"]}
+                                id="selected_answer"
+                              >
+                                {store1["option3"]}
+                              </option>
+                              <option
+                                style={{
+                                  fontFamily: "poppins",
+                                  fontWeight: "700",
+                                  fontSize: "14px",
+                                  color: "#004277",
+                                }}
+                                onChange={(e) => this.props.handle}
+                                value={store1["option4"]}
+                                id="selected_answer"
+                              >
+                                {store1["option4"]}
+                              </option>
+                            </select>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="dropdown_imageBG"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img src={Frame} />
+                  </div>
+                </div>
+              </div>
+
+              <div
+                style={{
+                  alignItems: "center",
+                  position: "absolute",
+                  bottom: 0,
+                  width: "100%",
+                  height: "80px",
+                  borderTopLeftRadius: "32px",
+                  borderTopRightRadius: "32px",
+                  justifyContent: "center",
+                  paddingLeft: "70px",
+                  paddingRight: "70px",
+                  backgroundImage: `url(${Footer})`,
+                  //backgroundPosition: 'center',
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <div className="submitSection">
+                  {currentQuestion == Questions.length - 1 ? (
+                    <button
+                      style={{
+                        textAlign: "center",
+                        backgroundColor: "#FFFFFF",
+                        padding: "11px",
+                        borderRadius: "10px",
+                        fontWeight: "bold",
+                        boxShadow: `1px 1px 1px black`,
+                        color: "#124589",
+                        fontFamily: "poppins",
+                        width: "180px",
+                      }}
+                      onClick={this.props.submit}
+                      id="nextQuestion"
+                    >
+                      Finish Survey
+                    </button>
+                  ) : (
+                    <button
+                      style={{
+                        textAlign: "center",
+                        backgroundColor: "#FFFFFF",
+                        padding: "11px",
+                        borderRadius: "10px",
+                        fontWeight: "bold",
+                        boxShadow: `1px 1px 1px black`,
+                        color: "#124589",
+                        fontFamily: "poppins",
+                        width: "180px",
+                      }}
+                      onClick={this.props.nextQuestion}
+                      id="nextQuestion"
+                    >
+                      Next
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      } else if (Questions[currentQuestion].secondary_type == "Scale") {
+        return (
+          <div>
+            <div
+              style={{
+                backgroundColor: "#F6F7FA",
+                height: "100vh",
+                backgroundSize: "cover",
+              }}
+            >
+              <div
+                className="QuestionContainer"
+                style={{
+                  backgroundImage: `url(${Question_bg})`,
+                  backgroundColor: "white",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  width: "100%",
+                  height: "205px",
+                  borderRadius: "0px 0px 32px 32px",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  display: "flex",
+                  flexDirection: "row",
+                  padding: "50px",
+                }}
+              >
+                <div style={{ marginBottom: "10px" }}>
+                  <h3
+                    style={{
+                      fontFamily: "poppins",
+                      fontSize: "16px",
+                      textAlign: "center",
+                      fontWeight: "700",
+                      backgroundColor: "#FCD034",
+                      width: "24px",
+                      height: "24px",
+                      borderRadius: "50%",
+                      padding: "3px",
+                    }}
+                  >
+                    {Questions[currentQuestion].id}
+                  </h3>
+                </div>
+                <p
+                  style={{
+                    fontFamily: "poppins",
+                    fontWeight: "600",
+                    fontSize: "16px",
+                    color: "white",
+                    paddingLeft: "15px",
+                  }}
+                >
+                  {Questions[currentQuestion].question}
+                </p>
+              </div>
+
+              <div
+                className="dropdown_imageBG"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "50px",
+                }}
+              >
+                <img src={Frame} />
+              </div>
+
+              <div
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  display: "flex",
+                  marginTop: "40px",
+                }}
+              >
+                <div
+                  className="options"
+                  style={{
+                    backgroundColor: "white",
+                    height: "68px",
+                    width: "343px",
+                    alignItems: "center",
+                    borderRadius: "12px",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <div
+                      className="custom-select"
+                      style={{ color: "white", marginBottom: "10px" }}
+                    >
+                      <form onSubmit={(e) => this.props.handle}>
+                        <input
+                          id="selected_answer"
+                          type="range"
+                          min="0"
+                          max="5"
+                          defaultValue="3"
+                          step="1"
+                        />
+                      </form>
+                      <span className="custom-arrow" color="#00E3B6"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                style={{
+                  alignItems: "center",
+                  position: "absolute",
+                  bottom: 0,
+                  width: "100%",
+                  height: "80px",
+                  borderTopLeftRadius: "32px",
+                  borderTopRightRadius: "32px",
+                  justifyContent: "center",
+                  paddingLeft: "70px",
+                  paddingRight: "70px",
+                  backgroundImage: `url(${Footer})`,
+                  //backgroundPosition: 'center',
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <div className="submitSection">
+
+                  {currentQuestion == Questions.length - 1 ? (
+                    <button
+                      style={{
+                        textAlign: "center",
+                        backgroundColor: "#FFFFFF",
+                        padding: "11px",
+                        borderRadius: "10px",
+                        fontWeight: "bold",
+                        boxShadow: `1px 1px 1px black`,
+                        color: "#124589",
+                        fontFamily: "poppins",
+                        width: "180px",
+                      }}
+                      onClick={this.props.submit}
+                      id="nextQuestion"
+                    >
+                      Finish Survey
+                    </button>
+                  ) : (
+                    <button
+                      style={{
+                        textAlign: "center",
+                        backgroundColor: "#FFFFFF",
+                        padding: "11px",
+                        borderRadius: "10px",
+                        fontWeight: "bold",
+                        boxShadow: `1px 1px 1px black`,
+                        color: "#124589",
+                        fontFamily: "poppins",
+                        width: "180px",
+                      }}
+                      onClick={this.props.nextQuestion}
+                      id="nextQuestion"
+                    >
+                      Next
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    }
+
+    console.log(point_earned)
+
+    if (point_earned > 0) {
+      return (
+        <div
+          className="body_container"
+          style={{
+            backgroundColor: '#F6F7FA',
+            height: "100vh",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-around", paddingTop: '30px' }}>
+
+            <div>
+              <h2 style={{ color: '#FF565E', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '600' }}>Congratulations !</h2>
+            </div>
+
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: "150px", flexDirection: 'column' }}>
+            <img src={trophy} />
+
+            {!loading ? (
+              <p style={{
+                marginTop: '10px',
+                fontFamily: 'poppins',
+                fontWeight: '600',
+                fontSize: '16px',
+                color: '#004277',
+              }}>You get {point_earned} Quiz Points</p>
+            ) : (
+              <p style={{
+                marginTop: '10px',
+                fontFamily: 'poppins',
+                fontWeight: '600',
+                fontSize: '16px',
+                color: '#004277',
+              }}> Loading Points </p>
+            )
+            }
+
+          </div>
+
+
+          <div style={{
+            alignItems: "center",
+            position: "absolute",
+            bottom: 0,
+            width: "100%",
+            height: "70px",
+            borderTopLeftRadius: "32px",
+            borderTopRightRadius: "32px",
+            justifyContent: "center",
+            paddingLeft: "70px",
+            paddingRight: "70px",
+            backgroundImage: `url(${Footer})`,
+            //backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column'
+
+
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row' }}>
+              <Link to={'/'} style={{ textDecoration: 'none' }} >
+                <button
+                  style={{
+                    textAlign: 'center',
+                    backgroundColor: '#00E3B6',
+                    padding: '11px',
+                    borderRadius: '8px',
+                    fontWeight: 'bold',
+                    // boxShadow: `1px 1px 4px rgba(15, 218, 137, 0.5)`,
+                    color: '#FFFFFF',
+                    fontFamily: 'poppins',
+                    width: '250px',
+                    marginTop: '12px',
+                    borderColor: '#00E3B6',
+                    height: '45px',
+                    marginRight: '10px'
+
+                  }}
+                >
+                  Done
+                </button>
+              </Link>
+
+              <button
+                style={{
+                  textAlign: 'center',
+                  backgroundColor: 'rgba(246, 247, 250, 0.3)',
+                  opacity: '30%',
+                  padding: '11px',
+                  borderRadius: '8px',
+                  fontWeight: 'bold',
+                  color: '#124589',
+                  fontFamily: 'poppins',
+                  width: '50px',
+                  marginTop: '12px',
+                  height: '45px',
+                  border: '2px solid #00E3B6'
+
+                }}
+              >
+                <FacebookShareButton quote='Nice Survey!' url={'https://www.google.com'}>
+                  <img src={Share} />
+                </FacebookShareButton>
+
+              </button>
+            </div>
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div
+          className="body_container"
+          style={{
+            backgroundColor: '#F6F7FA',
+            height: "100vh",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-around", paddingTop: '30px' }}>
+
+            <div>
+              <h2 style={{ color: '#FF565E', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '600' }}>Sorry !</h2>
+            </div>
+
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: "150px", flexDirection: 'column' }}>
+            <img src={Sorry} style={{ height: '158px', width: '214px' }} />
+
+            {!loading ? (
+              <p style={{
+                marginTop: '10px',
+                fontFamily: 'poppins',
+                fontWeight: '600',
+                fontSize: '16px',
+                color: '#004277',
+                textAlign: 'center'
+              }}>{point_earned}</p>
+            ) : (
+              <p style={{
+                marginTop: '10px',
+                fontFamily: 'poppins',
+                fontWeight: '600',
+                fontSize: '16px',
+                color: '#004277',
+              }}> Loading Points </p>
+            )
+            }
+
+          </div>
+
+
+          <div style={{
+            alignItems: "center",
+            position: "absolute",
+            bottom: 0,
+            width: "100%",
+            height: "70px",
+            borderTopLeftRadius: "32px",
+            borderTopRightRadius: "32px",
+            justifyContent: "center",
+            paddingLeft: "70px",
+            paddingRight: "70px",
+            backgroundImage: `url(${Footer})`,
+            //backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column'
+
+
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'row' }}>
+              <Link to={'/'} style={{ textDecoration: 'none' }} >
+                <button
+                  style={{
+                    textAlign: 'center',
+                    backgroundColor: '#00E3B6',
+                    padding: '11px',
+                    borderRadius: '8px',
+                    fontWeight: 'bold',
+                    // boxShadow: `1px 1px 4px rgba(15, 218, 137, 0.5)`,
+                    color: '#FFFFFF',
+                    fontFamily: 'poppins',
+                    width: '250px',
+                    marginTop: '12px',
+                    borderColor: '#00E3B6',
+                    height: '45px',
+                    marginRight: '10px'
+
+                  }}
+                >
+                  Done
+                </button>
+              </Link>
+
+              <button
+                style={{
+                  textAlign: 'center',
+                  backgroundColor: 'rgba(246, 247, 250, 0.3)',
+                  opacity: '30%',
+                  padding: '11px',
+                  borderRadius: '8px',
+                  fontWeight: 'bold',
+                  color: '#124589',
+                  fontFamily: 'poppins',
+                  width: '50px',
+                  marginTop: '12px',
+                  height: '45px',
+                  border: '2px solid #00E3B6'
+
+                }}
+              >
+                <FacebookShareButton quote='Nice Survey!' url={'https://www.google.com'}>
+                  <img src={Share} />
+                </FacebookShareButton>
+
+              </button>
+
+            </div>
+
+
+          </div>
+        </div>
+
+
+      );
+    }
+  }
+
+}
+
+function demoAsyncCall() {
+  return new Promise((resolve) => setTimeout(() => resolve(), 2000));
+}
+
+
+
+export default GetQuestionList;

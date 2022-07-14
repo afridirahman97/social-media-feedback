@@ -1,0 +1,11 @@
+.image{
+    border-radius: 50%;
+    width: 204.4px;
+    height: 204.4px;
+    border-style: solid;
+    border-width: 2px;
+    border-image: url(../images/first_frame.png);
+    border-image-repeat: round;
+    border-image-slice: 80;
+    border-image-width: 50px;
+}
